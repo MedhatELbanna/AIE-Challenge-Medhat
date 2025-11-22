@@ -1,2 +1,2 @@
 # AIE-Challenge-Medhat
-AIE Bootcamp challange
+This repo will contain my AI Engineering Bootcamp challenge project.
