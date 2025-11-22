@@ -4,10 +4,12 @@ from typing import List, Tuple, Dict
 import numpy as np
 from dotenv import load_dotenv
 from openai import OpenAI
-
+import os
+def get_client():
+    return OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 load_dotenv()   
-client = OpenAI()
-
+client = get_client()
+client.embeddings.create(model="text-embedding-3-small")
 
 def _split_text(text: str, chunk_size: int = 800, overlap: int = 200) -> List[str]:
     chunks: List[str] = []
