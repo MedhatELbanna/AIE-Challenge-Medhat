@@ -8,7 +8,7 @@ from fastapi import FastAPI, UploadFile, File, Form
 from fastapi.middleware.cors import CORSMiddleware
 from pypdf import PdfReader
 
-from rag_pipeline import build_index, answer_compliance_question
+from backend.rag_pipeline import build_index, answer_compliance_question
 
 # Load environment variables from .env (useful locally; on Railway it uses real env vars)
 load_dotenv()
