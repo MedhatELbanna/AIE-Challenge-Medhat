@@ -10,6 +10,11 @@ from pypdf import PdfReader
 
 from rag_pipeline import build_index, answer_compliance_question
 
+@app.get("/debug_env")
+def debug_env():
+    return {
+        "OPENAI_API_KEY_set": bool(os.getenv("OPENAI_API_KEY")),
+    }
 
 app = FastAPI(title="Technical Compliance Checker API")
 @app.get("/")
