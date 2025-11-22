@@ -7,6 +7,16 @@ from dotenv import load_dotenv
 from fastapi import FastAPI, UploadFile, File, Form
 from fastapi.middleware.cors import CORSMiddleware
 from pypdf import PdfReader
+from fastapi.staticfiles import StaticFiles
+from fastapi.responses import HTMLResponse
+# Serve static frontend
+app.mount("/static", StaticFiles(directory="backend/static"), name="static")
+
+@app.get("/", response_class=HTMLResponse)
+def index():
+    with open("backend/static/index.html", "r", encoding="utf-8") as f:
+        return f.read()
+
 
 from backend.rag_pipeline import build_index, answer_compliance_question
 
