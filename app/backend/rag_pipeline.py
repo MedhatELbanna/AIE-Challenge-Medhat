@@ -9,7 +9,7 @@ def get_client():
     return OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 load_dotenv()   
 client = get_client()
-client.embeddings.create(model="text-embedding-3-small")
+#client.embeddings.create(model="text-embedding-3-small")
 
 def _split_text(text: str, chunk_size: int = 800, overlap: int = 200) -> List[str]:
     chunks: List[str] = []
