@@ -12,7 +12,9 @@ from rag_pipeline import build_index, answer_compliance_question
 
 
 app = FastAPI(title="Technical Compliance Checker API")
-
+@app.get("/")
+def root():
+    return {"status": "ok", "message": "Technical Compliance Checker API is running"}
 # Allow frontend to call this API
 app.add_middleware(
     CORSMiddleware,
