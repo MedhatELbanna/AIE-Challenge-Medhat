@@ -1,0 +1,7 @@
+openai
+pypdf
+python-dotenv
+numpy
+tiktoken
+
+
