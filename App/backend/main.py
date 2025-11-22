@@ -10,24 +10,40 @@ from pypdf import PdfReader
 
 from rag_pipeline import build_index, answer_compliance_question
 
+# Load environment variables from .env (useful locally; on Railway it uses real env vars)
+load_dotenv()
+
+# Create FastAPI app FIRST
+app = FastAPI(title="Technical Compliance Checker API")
+
+# CORS for frontend
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # TODO: in production, restrict to your frontend domain
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+
+@app.get("/")
+def root():
+    return {
+        "status": "ok",
+        "message": "Technical Compliance Checker API is running",
+    }
+
+
+@app.get("/health")
+def health():
+    return {"status": "ok"}
+
+
 @app.get("/debug_env")
 def debug_env():
     return {
         "OPENAI_API_KEY_set": bool(os.getenv("OPENAI_API_KEY")),
     }
-
-app = FastAPI(title="Technical Compliance Checker API")
-@app.get("/")
-def root():
-    return {"status": "ok", "message": "Technical Compliance Checker API is running"}
-# Allow frontend to call this API
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=["*"],  # in production, restrict to your frontend domain
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
 
 
 def get_env_var(name: str) -> str:
@@ -47,11 +63,6 @@ def pdf_to_text(file: UploadFile) -> str:
     for page in reader.pages:
         pages.append(page.extract_text() or "")
     return "\n\n".join(pages)
-
-
-@app.get("/health")
-def health():
-    return {"status": "ok"}
 
 
 @app.post("/analyze")
